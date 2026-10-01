@@ -1,23 +1,30 @@
+Here is the fully updated code for **Zuta Paper** featuring your new requests:
+ * **Default Theme**: Switched to a sleek, modern **dark theme** (#090d16 background with dark slate cards and glowing accents).
+ * **Smooth Astra-like Animations**: Upgraded with custom glowing orb backdrops, smooth glassmorphism effects, fluid step transitions, and floating gradient pulses inspired by ChatGPT Astra.
+ * **Optional Recipient Name**: The recipient name remains completely optional and is automatically omitted if left blank.
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Zuta Paper - Professional Letter Generator</title>
-    <!-- Tailwind CSS for modern, responsive, professional styling -->
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts: Inter -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- html2pdf.js for robust client-side A4 PDF generation -->
+    <!-- html2pdf.js for client-side A4 PDF generation -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        primary: '#2563eb',
-                        primaryHover: '#1d4ed8',
-                        darkBg: '#0f172a',
+                        primary: '#3b82f6',
+                        primaryHover: '#2563eb',
+                        darkBg: '#090d16',
+                        cardBg: '#111827',
+                        cardBorder: '#1f2937',
                     },
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
@@ -27,55 +34,109 @@
         }
     </script>
     <style>
-        /* Smooth transitions & Astra-like subtle glowing gradients */
+        /* Smooth Astra-like Animations & Dark Aesthetics */
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f8fafc;
-            color: #1e293b;
+            background-color: #090d16;
+            color: #f3f4f6;
+            overflow-x: hidden;
         }
+
+        /* Ambient Glowing Background Orbs */
+        .astra-bg-glow {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: -1;
+            overflow: hidden;
+        }
+        .astra-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.15;
+            animation: floatOrb 12s ease-in-out infinite alternate;
+        }
+        .orb-1 {
+            width: 450px;
+            height: 450px;
+            background: #3b82f6;
+            top: -100px;
+            left: -100px;
+        }
+        .orb-2 {
+            width: 500px;
+            height: 500px;
+            background: #8b5cf6;
+            bottom: -150px;
+            right: -150px;
+            animation-delay: -4s;
+        }
+
+        @keyframes floatOrb {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(40px, 30px) scale(1.1); }
+        }
+
+        /* Fluid Fade-in & Scale Animation */
         .fade-in {
-            animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation: astraFadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        @keyframes astraFadeIn {
+            from { opacity: 0; transform: translateY(12px) scale(0.99); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
         }
-        /* Custom scrollbar for clean professional UI */
-        ::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
+
+        /* Glassmorphism card styling */
+        .glass-card {
+            background: rgba(17, 24, 39, 0.75);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
         }
-        ::-webkit-scrollbar-track {
-            background: #f1f5f9;
+
+        /* Custom inputs for dark mode */
+        input, select, textarea {
+            background-color: rgba(31, 41, 55, 0.6) !important;
+            border-color: rgba(255, 255, 255, 0.1) !important;
+            color: #f3f4f6 !important;
         }
-        ::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
-            border-radius: 3px;
+        input:focus, select:focus, textarea:focus {
+            border-color: #3b82f6 !important;
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.25) !important;
         }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #94a3b8;
-        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #090d16; }
+        ::-webkit-scrollbar-thumb { background: #374151; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #4b5563; }
     </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between selection:bg-blue-100 selection:text-blue-900">
+<body class="min-h-screen flex flex-col justify-between selection:bg-blue-500 selection:text-white">
+
+    <!-- Ambient Astra Background Glow -->
+    <div class="astra-bg-glow">
+        <div class="astra-orb orb-1"></div>
+        <div class="astra-orb orb-2"></div>
+    </div>
 
     <!-- App Container -->
     <div id="app" class="flex-grow flex flex-col">
-        <!-- Dynamic views will be rendered here by JavaScript -->
+        <!-- Dynamic views rendered via JavaScript -->
     </div>
 
-    <!-- Confirmation Modal Portal -->
-    <div id="modal-container"></div>
-
     <!-- Footer Credit -->
-    <footer class="py-4 text-center text-xs text-slate-400 border-t border-slate-100 bg-white">
+    <footer class="py-4 text-center text-xs text-slate-500 border-t border-slate-800/60 bg-[#090d16]/80 backdrop-blur-md">
         Zuta Paper • Professional Letter Generator • Made by Zubeir & Thoufiq
     </footer>
 
-    <!-- Application Logic & Complete Source Code -->
+    <!-- Application Logic & Source Code -->
     <script>
-        // --- State Management & Storage ---
-        const STORAGE_KEY = 'zuta_paper_form_data_v1';
+        const STORAGE_KEY = 'zuta_paper_form_data_v3';
 
         const defaultFormData = {
             recipientName: '',
@@ -112,8 +173,8 @@
         };
 
         let appState = {
-            currentScreen: 'splash', // splash, home, form, review, preview, about
-            currentStep: 1, // 1 to 6 for form steps
+            currentScreen: 'splash',
+            currentStep: 1,
             formData: loadSavedData()
         };
 
@@ -129,59 +190,39 @@
         function saveFormData() {
             try {
                 localStorage.setItem(STORAGE_KEY, JSON.stringify(appState.formData));
-            } catch (e) {
-                console.error('Could not save to localStorage', e);
-            }
+            } catch (e) {}
         }
 
         function clearSavedData() {
             try {
                 localStorage.removeItem(STORAGE_KEY);
                 appState.formData = { ...defaultFormData };
-            } catch (e) {
-                console.error('Could not clear storage', e);
-            }
+            } catch (e) {}
         }
 
-        // --- College Presets Data ---
-        const collegePresets = {
-            cmr: {
-                displayName: "CMR College",
-                institutionName: "CMRCET",
-                addressLines: ["Kandlakoya", "Medchal"],
-                city: "Hyderabad",
-                district: "Medchal-Malkajgiri",
-                state: "Telangana",
-                pincode: "501401"
-            }
-        };
-
-        // --- Validation Utility ---
         function validateStep(step) {
             const d = appState.formData;
             switch(step) {
-                case 1: // Recipient
-                    if (!d.recipientName.trim()) return "Please enter the recipient's full name.";
-                    if (d.recipientDesignation === 'Other' && !d.customDesignation.trim()) return "Please enter the recipient's designation.";
+                case 1:
+                    if (d.recipientDesignation === 'Other' && !d.customDesignation.trim()) return "Please enter the custom recipient's designation.";
                     return null;
-                case 2: // College
+                case 2:
                     if (d.collegeType === 'other') {
                         if (!d.institutionName.trim()) return "Please enter the college/institution name.";
                         if (!d.addressLines[0].trim()) return "Please enter address line 1.";
                     }
                     return null;
-                case 3: // Student
+                case 3:
                     if (!d.studentName.trim()) return "Please enter your full name.";
                     if (!d.rollNumber.trim()) return "Please enter your roll number.";
                     if (!d.courseBranch.trim()) return "Please enter your course or branch.";
-                    if (!d.year.trim()) return "Please select your year.";
                     return null;
-                case 4: // Absence & Reason
+                case 4:
                     if (!d.letterDate) return "Please select a letter date.";
                     if (!d.numberOfDays || d.numberOfDays <= 0) return "Please enter the number of days absent.";
                     if (!d.reasonText.trim()) return "Please provide a reason for your absence.";
                     return null;
-                case 5: // Attendance
+                case 5:
                     if (d.hasAttendance === 'yes') {
                         const att = parseFloat(d.attendancePercentage);
                         if (isNaN(att) || att < 0 || att > 100) return "Please enter a valid attendance percentage between 0 and 100.";
@@ -192,19 +233,13 @@
             }
         }
 
-        // --- Letter Generator Core Logic ---
         function generateLetterText(d) {
-            // Format Date nicely
             const formattedDate = new Date(d.letterDate).toLocaleDateString('en-US', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
+                year: 'numeric', month: 'long', day: 'numeric'
             });
 
-            // Determine Recipient Designation string
             const designation = d.recipientDesignation === 'Other' ? d.customDesignation : d.recipientDesignation;
 
-            // Determine College Address Block
             let addressBlock = '';
             if (d.collegeType === 'cmr') {
                 addressBlock = `CMRCET\nKandlakoya\nMedchal, Hyderabad - 501401`;
@@ -213,33 +248,32 @@
                 addressBlock = lines.join('\n');
             }
 
-            // Date description string
             let dateDesc = '';
             if (d.absenceType === 'single') {
-                dateDesc = `on ${new Date(d.startDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}` ;
+                dateDesc = `on ${new Date(d.startDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}`;
             } else if (d.absenceType === 'range') {
                 dateDesc = `from ${new Date(d.startDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })} to ${new Date(d.endDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}`;
             } else {
                 dateDesc = `on dates: ${d.customDatesText}`;
             }
 
-            // Optional metadata block inside or above letter if needed
-            let optionalMeta = [];
-            if (d.department) optionalMeta.push(`Department: ${d.department}`);
-            if (d.semester) optionalMeta.push(`Semester: ${d.semester}`);
-            if (d.academicYear) optionalMeta.push(`Academic Year: ${d.academicYear}`);
-            if (d.mentorName) optionalMeta.push(`Mentor: ${d.mentorName}`);
-
-            // Attendance sentence conditional generation
             let attendanceSentence = '';
             if (d.hasAttendance === 'yes' && d.attendancePercentage !== '') {
                 const mentorRef = d.mentorName ? `my mentor ${d.mentorName}` : `my mentor`;
                 attendanceSentence = `I have informed ${mentorRef} in prior and my attendance percentage is ${d.attendancePercentage}%.`;
             }
 
-            // Build body paragraphs
             let letter = `${formattedDate}\n\n`;
-            letter += `${d.recipientName}\n${designation}\n${addressBlock}\n\n`;
+            
+            // Omitted completely if recipientName is empty
+            if (d.recipientName.trim()) {
+                letter += `${d.recipientName.trim()}\n`;
+            }
+            if (designation) {
+                letter += `${designation}\n`;
+            }
+            letter += `${addressBlock}\n\n`;
+            
             letter += `Respected Sir/Madam,\n\n`;
             letter += `Subject: Request for Leave of Absence\n\n`;
             
@@ -266,7 +300,6 @@
             return letter.trim();
         }
 
-        // --- Render Engine ---
         function render() {
             const app = document.getElementById('app');
             app.innerHTML = '';
@@ -279,7 +312,7 @@
                             appState.currentScreen = 'home';
                             render();
                         }
-                    }, 1500);
+                    }, 1400);
                     break;
                 case 'home':
                     app.innerHTML = renderHomeScreen();
@@ -300,17 +333,15 @@
             }
         }
 
-        // --- Screen Components ---
-
         function renderSplashScreen() {
             return `
-                <div class="flex-grow flex flex-col items-center justify-center bg-white px-4 fade-in">
-                    <div class="w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center text-white text-2xl font-bold shadow-lg shadow-blue-500/20 mb-6">
+                <div class="flex-grow flex flex-col items-center justify-center px-4 fade-in">
+                    <div class="w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center text-white text-2xl font-bold shadow-xl shadow-blue-500/30 mb-6 border border-blue-400/30">
                         ZP
                     </div>
-                    <h1 class="text-3xl font-bold tracking-tight text-slate-900 mb-2">Zuta Paper</h1>
-                    <p class="text-slate-500 font-medium mb-4">Professional Letter Generator</p>
-                    <div class="text-xs uppercase tracking-widest text-slate-400 font-semibold">
+                    <h1 class="text-3xl font-bold tracking-tight text-white mb-2">Zuta Paper</h1>
+                    <p class="text-slate-400 font-medium mb-4 text-sm">Professional Letter Generator</p>
+                    <div class="text-xs uppercase tracking-widest text-blue-400/80 font-semibold">
                         Made by Zubeir & Thoufiq
                     </div>
                 </div>
@@ -320,19 +351,19 @@
         function renderHomeScreen() {
             return `
                 <div class="flex-grow flex flex-col items-center justify-center px-4 max-w-xl mx-auto text-center fade-in py-12">
-                    <div class="w-20 h-20 bg-blue-50 text-blue-600 rounded-3xl flex items-center justify-center text-3xl font-bold mb-6 border border-blue-100 shadow-sm">
+                    <div class="w-20 h-20 bg-blue-500/10 text-blue-400 rounded-3xl flex items-center justify-center text-3xl font-bold mb-6 border border-blue-500/20 shadow-2xl">
                         📄
                     </div>
-                    <h1 class="text-4xl font-extrabold tracking-tight text-slate-900 mb-3">Zuta Paper</h1>
-                    <p class="text-lg font-medium text-blue-600 mb-4">Professional Letter Generator</p>
-                    <p class="text-slate-600 mb-8 leading-relaxed">
-                        Create a formal college leave or absence letter in a few simple steps. Clean, precise, and instantly ready.
+                    <h1 class="text-4xl font-extrabold tracking-tight text-white mb-3">Zuta Paper</h1>
+                    <p class="text-lg font-medium text-blue-400 mb-4">Professional Letter Generator</p>
+                    <p class="text-slate-400 mb-8 leading-relaxed text-sm">
+                        Create a formal college leave or absence letter in seconds with smooth, glowing aesthetics and instant PDF exports.
                     </p>
                     <div class="flex flex-col sm:flex-row gap-4 w-full justify-center">
-                        <button onclick="startNewFlow()" class="px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl shadow-lg shadow-blue-600/20 transition-all duration-200 text-base">
+                        <button onclick="startNewFlow()" class="px-8 py-4 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-2xl shadow-lg shadow-blue-600/30 transition-all duration-200 text-sm">
                             Create New Letter
                         </button>
-                        <button onclick="navigateTo('about')" class="px-8 py-4 bg-white hover:bg-slate-50 text-slate-700 font-semibold rounded-xl border border-slate-200 transition-all duration-200 text-base">
+                        <button onclick="navigateTo('about')" class="px-8 py-4 glass-card hover:bg-slate-800 text-slate-300 font-semibold rounded-2xl transition-all duration-200 text-sm">
                             About Zuta Paper
                         </button>
                     </div>
@@ -360,49 +391,44 @@
 
             return `
                 <div class="flex-grow flex flex-col max-w-2xl w-full mx-auto px-4 py-8 fade-in">
-                    <!-- Top Navigation & Progress -->
                     <div class="mb-8">
                         <div class="flex items-center justify-between mb-4">
-                            <button onclick="navigateHomeWithConfirm()" class="text-sm font-semibold text-slate-500 hover:text-slate-800 flex items-center gap-1">
+                            <button onclick="navigateHomeWithConfirm()" class="text-xs font-semibold text-slate-400 hover:text-white flex items-center gap-1 transition-colors">
                                 ← Exit to Home
                             </button>
-                            <span class="text-xs font-bold uppercase tracking-wider text-blue-600 bg-blue-50 px-3 py-1 rounded-full">
+                            <span class="text-xs font-bold uppercase tracking-wider text-blue-400 bg-blue-500/10 px-3 py-1 rounded-full border border-blue-500/20">
                                 Step ${step} of ${totalSteps}
                             </span>
                         </div>
-                        <div class="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
-                            <div class="bg-blue-600 h-full transition-all duration-300" style="width: ${progress}%"></div>
+                        <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
+                            <div class="bg-blue-500 h-full transition-all duration-500 shadow-sm shadow-blue-500/50" style="width: ${progress}%"></div>
                         </div>
                     </div>
 
-                    <!-- Step Header -->
                     <div class="mb-6">
-                        <h2 class="text-2xl font-bold text-slate-900">${stepTitle}</h2>
-                        <p class="text-slate-500 text-sm mt-1">${stepSubtitle}</p>
+                        <h2 class="text-2xl font-bold text-white">${stepTitle}</h2>
+                        <p class="text-slate-400 text-xs mt-1">${stepSubtitle}</p>
                     </div>
 
-                    <!-- Error Banner Placeholder -->
-                    <div id="form-error" class="hidden mb-4 p-4 bg-red-50 border border-red-200 text-red-700 text-sm rounded-xl font-medium"></div>
+                    <div id="form-error" class="hidden mb-4 p-4 bg-red-500/10 border border-red-500/30 text-red-400 text-xs rounded-xl font-medium"></div>
 
-                    <!-- Step Content Card -->
-                    <div class="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm mb-6 flex-grow">
+                    <div class="glass-card rounded-3xl p-6 sm:p-8 mb-6 flex-grow">
                         ${renderStepFields(step, d)}
                     </div>
 
-                    <!-- Form Action Buttons -->
                     <div class="flex items-center justify-between gap-4 pt-2">
                         ${step > 1 ? `
-                            <button onclick="prevStep()" class="px-6 py-3 border border-slate-300 hover:bg-slate-50 text-slate-700 font-semibold rounded-xl transition-all">
+                            <button onclick="prevStep()" class="px-6 py-3 glass-card hover:bg-slate-800 text-slate-300 font-semibold rounded-xl text-xs transition-all">
                                 Back
                             </button>
                         ` : `<div></div>`}
                         
                         ${step < totalSteps ? `
-                            <button onclick="nextStep()" class="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl shadow-md shadow-blue-600/20 transition-all ml-auto">
+                            <button onclick="nextStep()" class="px-8 py-3 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-xl shadow-lg shadow-blue-600/20 transition-all text-xs ml-auto">
                                 Continue
                             </button>
                         ` : `
-                            <button onclick="finishForm()" class="px-8 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-xl shadow-md shadow-emerald-600/20 transition-all ml-auto">
+                            <button onclick="finishForm()" class="px-8 py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold rounded-xl shadow-lg shadow-emerald-600/20 transition-all text-xs ml-auto">
                                 Review Letter →
                             </button>
                         `}
@@ -417,20 +443,21 @@
                     return `
                         <div class="space-y-5">
                             <div>
-                                <label class="block text-sm font-semibold text-slate-700 mb-2">Recipient Full Name *</label>
-                                <input type="text" id="recipientName" value="${escapeHTML(d.recipientName)}" placeholder="e.g. Dr. Ramesh Kumar" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:outline-none text-slate-800">
+                                <label class="block text-xs font-semibold text-slate-300 mb-1">Recipient Full Name <span class="text-slate-500 font-normal">(Optional)</span></label>
+                                <p class="text-[11px] text-slate-400 mb-2">Leave blank if addressing generally to the designation.</p>
+                                <input type="text" id="recipientName" value="${escapeHTML(d.recipientName)}" placeholder="e.g. Dr. Ramesh Kumar" class="w-full px-4 py-3 rounded-xl border text-sm">
                             </div>
                             <div>
-                                <label class="block text-sm font-semibold text-slate-700 mb-2">Recipient Designation *</label>
-                                <select id="recipientDesignation" onchange="updateFormData({recipientDesignation: this.value})" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:outline-none text-slate-800 bg-white">
+                                <label class="block text-xs font-semibold text-slate-300 mb-2">Recipient Designation *</label>
+                                <select id="recipientDesignation" onchange="updateFormData({recipientDesignation: this.value})" class="w-full px-4 py-3 rounded-xl border text-sm">
                                     ${['Principal', 'HOD', 'Class Coordinator', 'Faculty/Lecturer', 'Mentor', 'Other'].map(opt => `
-                                        <option value="${opt}" ${d.recipientDesignation === opt ? 'selected' : ''}>${opt}</option>
+                                        <option value="${opt}" ${d.recipientDesignation === opt ? 'selected' : ''} style="background: #111827; color: #f3f4f6;">${opt}</option>
                                     `).join('')}
                                 </select>
                             </div>
                             <div id="customDesignationContainer" class="${d.recipientDesignation === 'Other' ? '' : 'hidden'}">
-                                <label class="block text-sm font-semibold text-slate-700 mb-2">Custom Designation *</label>
-                                <input type="text" id="customDesignation" value="${escapeHTML(d.customDesignation)}" placeholder="e.g. Dean of Academics" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:outline-none text-slate-800">
+                                <label class="block text-xs font-semibold text-slate-300 mb-2">Custom Designation *</label>
+                                <input type="text" id="customDesignation" value="${escapeHTML(d.customDesignation)}" placeholder="e.g. Dean of Academics" class="w-full px-4 py-3 rounded-xl border text-sm">
                             </div>
                         </div>
                     `;
@@ -438,20 +465,20 @@
                     return `
                         <div class="space-y-5">
                             <div>
-                                <label class="block text-sm font-semibold text-slate-700 mb-3">College Preset</label>
+                                <label class="block text-xs font-semibold text-slate-300 mb-3">College Preset</label>
                                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                                    <label class="flex items-center gap-3 p-4 border rounded-xl cursor-pointer transition-all ${d.collegeType === 'cmr' ? 'border-blue-600 bg-blue-50/50 ring-1 ring-blue-600' : 'border-slate-200 hover:border-slate-300'}">
-                                        <input type="radio" name="collegeType" value="cmr" ${d.collegeType === 'cmr' ? 'checked' : ''} onchange="setCollegeType('cmr')" class="text-blue-600">
+                                    <label class="flex items-center gap-3 p-4 rounded-xl cursor-pointer transition-all border ${d.collegeType === 'cmr' ? 'border-blue-500 bg-blue-500/10' : 'border-slate-800 bg-slate-900/40 hover:border-slate-700'}">
+                                        <input type="radio" name="collegeType" value="cmr" ${d.collegeType === 'cmr' ? 'checked' : ''} onchange="setCollegeType('cmr')" class="text-blue-500">
                                         <div>
-                                            <div class="font-semibold text-slate-900">CMR College</div>
-                                            <div class="text-xs text-slate-500">CMRCET, Kandlakoya</div>
+                                            <div class="font-semibold text-white text-sm">CMR College</div>
+                                            <div class="text-[11px] text-slate-400">CMRCET, Kandlakoya</div>
                                         </div>
                                     </label>
-                                    <label class="flex items-center gap-3 p-4 border rounded-xl cursor-pointer transition-all ${d.collegeType === 'other' ? 'border-blue-600 bg-blue-50/50 ring-1 ring-blue-600' : 'border-slate-200 hover:border-slate-300'}">
-                                        <input type="radio" name="collegeType" value="other" ${d.collegeType === 'other' ? 'checked' : ''} onchange="setCollegeType('other')" class="text-blue-600">
+                                    <label class="flex items-center gap-3 p-4 rounded-xl cursor-pointer transition-all border ${d.collegeType === 'other' ? 'border-blue-500 bg-blue-500/10' : 'border-slate-800 bg-slate-900/40 hover:border-slate-700'}">
+                                        <input type="radio" name="collegeType" value="other" ${d.collegeType === 'other' ? 'checked' : ''} onchange="setCollegeType('other')" class="text-blue-500">
                                         <div>
-                                            <div class="font-semibold text-slate-900">Other College</div>
-                                            <div class="text-xs text-slate-500">Custom Institution</div>
+                                            <div class="font-semibold text-white text-sm">Other College</div>
+                                            <div class="text-[11px] text-slate-400">Custom Institution</div>
                                         </div>
                                     </label>
                                 </div>
@@ -459,42 +486,42 @@
 
                             <div id="otherCollegeFields" class="${d.collegeType === 'other' ? 'space-y-4 pt-2' : 'hidden space-y-4 pt-2'}">
                                 <div>
-                                    <label class="block text-sm font-semibold text-slate-700 mb-2">College/Institution Name *</label>
-                                    <input type="text" id="institutionName" value="${escapeHTML(d.institutionName)}" placeholder="e.g. IIT Hyderabad" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:outline-none">
+                                    <label class="block text-xs font-semibold text-slate-300 mb-2">College/Institution Name *</label>
+                                    <input type="text" id="institutionName" value="${escapeHTML(d.institutionName)}" placeholder="e.g. IIT Hyderabad" class="w-full px-4 py-3 rounded-xl border text-sm">
                                 </div>
                                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                     <div>
-                                        <label class="block text-sm font-semibold text-slate-700 mb-2">Address Line 1 *</label>
-                                        <input type="text" id="addressLine1" value="${escapeHTML(d.addressLines[0] || '')}" placeholder="Street / Area" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:outline-none">
+                                        <label class="block text-xs font-semibold text-slate-300 mb-2">Address Line 1 *</label>
+                                        <input type="text" id="addressLine1" value="${escapeHTML(d.addressLines[0] || '')}" placeholder="Street / Area" class="w-full px-4 py-3 rounded-xl border text-sm">
                                     </div>
                                     <div>
-                                        <label class="block text-sm font-semibold text-slate-700 mb-2">Address Line 2</label>
-                                        <input type="text" id="addressLine2" value="${escapeHTML(d.addressLines[1] || '')}" placeholder="Landmark / Locality" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:outline-none">
+                                        <label class="block text-xs font-semibold text-slate-300 mb-2">Address Line 2</label>
+                                        <input type="text" id="addressLine2" value="${escapeHTML(d.addressLines[1] || '')}" placeholder="Landmark / Locality" class="w-full px-4 py-3 rounded-xl border text-sm">
                                     </div>
                                 </div>
                                 <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
                                     <div>
-                                        <label class="block text-sm font-semibold text-slate-700 mb-2">City</label>
-                                        <input type="text" id="city" value="${escapeHTML(d.city)}" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:outline-none">
+                                        <label class="block text-xs font-semibold text-slate-300 mb-2">City</label>
+                                        <input type="text" id="city" value="${escapeHTML(d.city)}" class="w-full px-4 py-3 rounded-xl border text-sm">
                                     </div>
                                     <div>
-                                        <label class="block text-sm font-semibold text-slate-700 mb-2">District</label>
-                                        <input type="text" id="district" value="${escapeHTML(d.district)}" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:outline-none">
+                                        <label class="block text-xs font-semibold text-slate-300 mb-2">District</label>
+                                        <input type="text" id="district" value="${escapeHTML(d.district)}" class="w-full px-4 py-3 rounded-xl border text-sm">
                                     </div>
                                     <div>
-                                        <label class="block text-sm font-semibold text-slate-700 mb-2">State</label>
-                                        <input type="text" id="state" value="${escapeHTML(d.state)}" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:outline-none">
+                                        <label class="block text-xs font-semibold text-slate-300 mb-2">State</label>
+                                        <input type="text" id="state" value="${escapeHTML(d.state)}" class="w-full px-4 py-3 rounded-xl border text-sm">
                                     </div>
                                     <div>
-                                        <label class="block text-sm font-semibold text-slate-700 mb-2">PIN Code</label>
-                                        <input type="text" id="pincode" value="${escapeHTML(d.pincode)}" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:outline-none">
+                                        <label class="block text-xs font-semibold text-slate-300 mb-2">PIN Code</label>
+                                        <input type="text" id="pincode" value="${escapeHTML(d.pincode)}" class="w-full px-4 py-3 rounded-xl border text-sm">
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl mt-4">
-                                <div class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Live Address Preview</div>
-                                <div id="liveAddressPreview" class="text-sm font-medium text-slate-800 whitespace-pre-line">
+                            <div class="p-4 bg-slate-900/60 border border-slate-800 rounded-xl mt-4">
+                                <div class="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">Live Address Preview</div>
+                                <div id="liveAddressPreview" class="text-xs font-medium text-slate-300 whitespace-pre-line">
                                     ${d.collegeType === 'cmr' ? 'CMRCET\nKandlakoya\nMedchal, Hyderabad - 501401' : [d.institutionName, d.addressLines[0], d.addressLines[1], `${d.city}, ${d.state} -${d.pincode}`].filter(Boolean).join('\n')}
                                 </div>
                             </div>
@@ -505,29 +532,29 @@
                         <div class="space-y-5">
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div>
-                                    <label class="block text-sm font-semibold text-slate-700 mb-2">Full Name *</label>
-                                    <input type="text" id="studentName" value="${escapeHTML(d.studentName)}" placeholder="e.g. Rahul Sharma" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:outline-none">
+                                    <label class="block text-xs font-semibold text-slate-300 mb-2">Full Name *</label>
+                                    <input type="text" id="studentName" value="${escapeHTML(d.studentName)}" placeholder="e.g. Rahul Sharma" class="w-full px-4 py-3 rounded-xl border text-sm">
                                 </div>
                                 <div>
-                                    <label class="block text-sm font-semibold text-slate-700 mb-2">Roll Number *</label>
-                                    <input type="text" id="rollNumber" value="${escapeHTML(d.rollNumber)}" placeholder="e.g. 22R11A6601" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:outline-none">
+                                    <label class="block text-xs font-semibold text-slate-300 mb-2">Roll Number *</label>
+                                    <input type="text" id="rollNumber" value="${escapeHTML(d.rollNumber)}" placeholder="e.g. 22R11A6601" class="w-full px-4 py-3 rounded-xl border text-sm">
                                 </div>
                             </div>
                             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                                 <div class="sm:col-span-2">
-                                    <label class="block text-sm font-semibold text-slate-700 mb-2">Course / Branch *</label>
-                                    <input type="text" id="courseBranch" value="${escapeHTML(d.courseBranch)}" placeholder="e.g. B.Tech – CSM-F" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:outline-none">
+                                    <label class="block text-xs font-semibold text-slate-300 mb-2">Course / Branch *</label>
+                                    <input type="text" id="courseBranch" value="${escapeHTML(d.courseBranch)}" placeholder="e.g. B.Tech – CSM-F" class="w-full px-4 py-3 rounded-xl border text-sm">
                                 </div>
                                 <div>
-                                    <label class="block text-sm font-semibold text-slate-700 mb-2">Year *</label>
-                                    <select id="year" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:outline-none bg-white">
-                                        ${['1st', '2nd', '3rd', '4th'].map(y => `<option value="${y}" ${d.year === y ? 'selected' : ''}>${y} Year</option>`).join('')}
+                                    <label class="block text-xs font-semibold text-slate-300 mb-2">Year *</label>
+                                    <select id="year" class="w-full px-4 py-3 rounded-xl border text-sm">
+                                        ${['1st', '2nd', '3rd', '4th'].map(y => `<option value="${y}" ${d.year === y ? 'selected' : ''} style="background: #111827; color: #f3f4f6;">${y} Year</option>`).join('')}
                                     </select>
                                 </div>
                             </div>
                             <div>
-                                <label class="block text-sm font-semibold text-slate-700 mb-2">Section (Optional)</label>
-                                <input type="text" id="section" value="${escapeHTML(d.section)}" placeholder="e.g. A or CSE-1" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:outline-none">
+                                <label class="block text-xs font-semibold text-slate-300 mb-2">Section (Optional)</label>
+                                <input type="text" id="section" value="${escapeHTML(d.section)}" placeholder="e.g. A or CSE-1" class="w-full px-4 py-3 rounded-xl border text-sm">
                             </div>
                         </div>
                     `;
@@ -536,28 +563,28 @@
                         <div class="space-y-5">
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div>
-                                    <label class="block text-sm font-semibold text-slate-700 mb-2">Letter Date *</label>
+                                    <label class="block text-xs font-semibold text-slate-300 mb-2">Letter Date *</label>
                                     <div class="flex gap-2">
-                                        <input type="date" id="letterDate" value="${d.letterDate}" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:outline-none">
-                                        <button type="button" onclick="setTodayLetterDate()" class="px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-xl whitespace-nowrap">Today</button>
+                                        <input type="date" id="letterDate" value="${d.letterDate}" class="w-full px-4 py-3 rounded-xl border text-sm">
+                                        <button type="button" onclick="setTodayLetterDate()" class="px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold rounded-xl whitespace-nowrap border border-slate-700">Today</button>
                                     </div>
                                 </div>
                                 <div>
-                                    <label class="block text-sm font-semibold text-slate-700 mb-2">Number of Days Absent *</label>
-                                    <input type="number" id="numberOfDays" min="1" value="${d.numberOfDays}" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:outline-none">
+                                    <label class="block text-xs font-semibold text-slate-300 mb-2">Number of Days Absent *</label>
+                                    <input type="number" id="numberOfDays" min="1" value="${d.numberOfDays}" class="w-full px-4 py-3 rounded-xl border text-sm">
                                 </div>
                             </div>
 
                             <div>
-                                <label class="block text-sm font-semibold text-slate-700 mb-2">Absence Structure</label>
+                                <label class="block text-xs font-semibold text-slate-300 mb-2">Absence Structure</label>
                                 <div class="grid grid-cols-3 gap-3 mb-4">
-                                    <label class="flex items-center justify-center p-3 border rounded-xl cursor-pointer text-sm font-medium ${d.absenceType === 'single' ? 'border-blue-600 bg-blue-50 text-blue-900' : 'border-slate-200'}">
+                                    <label class="flex items-center justify-center p-3 rounded-xl cursor-pointer text-xs font-medium border ${d.absenceType === 'single' ? 'border-blue-500 bg-blue-500/10 text-white' : 'border-slate-800 bg-slate-900/40 text-slate-400'}">
                                         <input type="radio" name="absenceType" value="single" ${d.absenceType === 'single' ? 'checked' : ''} onchange="setAbsenceType('single')" class="sr-only"> Single Date
                                     </label>
-                                    <label class="flex items-center justify-center p-3 border rounded-xl cursor-pointer text-sm font-medium ${d.absenceType === 'range' ? 'border-blue-600 bg-blue-50 text-blue-900' : 'border-slate-200'}">
+                                    <label class="flex items-center justify-center p-3 rounded-xl cursor-pointer text-xs font-medium border ${d.absenceType === 'range' ? 'border-blue-500 bg-blue-500/10 text-white' : 'border-slate-800 bg-slate-900/40 text-slate-400'}">
                                         <input type="radio" name="absenceType" value="range" ${d.absenceType === 'range' ? 'checked' : ''} onchange="setAbsenceType('range')" class="sr-only"> Date Range
                                     </label>
-                                    <label class="flex items-center justify-center p-3 border rounded-xl cursor-pointer text-sm font-medium ${d.absenceType === 'multiple' ? 'border-blue-600 bg-blue-50 text-blue-900' : 'border-slate-200'}">
+                                    <label class="flex items-center justify-center p-3 rounded-xl cursor-pointer text-xs font-medium border ${d.absenceType === 'multiple' ? 'border-blue-500 bg-blue-500/10 text-white' : 'border-slate-800 bg-slate-900/40 text-slate-400'}">
                                         <input type="radio" name="absenceType" value="multiple" ${d.absenceType === 'multiple' ? 'checked' : ''} onchange="setAbsenceType('multiple')" class="sr-only"> Multiple Dates
                                     </label>
                                 </div>
@@ -565,98 +592,98 @@
                                 <div id="absenceDateInputs" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                     ${d.absenceType === 'single' ? `
                                         <div class="sm:col-span-2">
-                                            <label class="block text-xs font-semibold text-slate-500 mb-1">Absence Date *</label>
-                                            <input type="date" id="startDate" value="${d.startDate}" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:outline-none">
+                                            <label class="block text-[11px] font-semibold text-slate-400 mb-1">Absence Date *</label>
+                                            <input type="date" id="startDate" value="${d.startDate}" class="w-full px-4 py-3 rounded-xl border text-sm">
                                         </div>
                                     ` : d.absenceType === 'range' ? `
                                         <div>
-                                            <label class="block text-xs font-semibold text-slate-500 mb-1">Start Date *</label>
-                                            <input type="date" id="startDate" value="${d.startDate}" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:outline-none">
+                                            <label class="block text-[11px] font-semibold text-slate-400 mb-1">Start Date *</label>
+                                            <input type="date" id="startDate" value="${d.startDate}" class="w-full px-4 py-3 rounded-xl border text-sm">
                                         </div>
                                         <div>
-                                            <label class="block text-xs font-semibold text-slate-500 mb-1">End Date *</label>
-                                            <input type="date" id="endDate" value="${d.endDate}" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:outline-none">
+                                            <label class="block text-[11px] font-semibold text-slate-400 mb-1">End Date *</label>
+                                            <input type="date" id="endDate" value="${d.endDate}" class="w-full px-4 py-3 rounded-xl border text-sm">
                                         </div>
                                     ` : `
                                         <div class="sm:col-span-2">
-                                            <label class="block text-xs font-semibold text-slate-500 mb-1">Enter Dates *</label>
-                                            <input type="text" id="customDatesText" value="${escapeHTML(d.customDatesText)}" placeholder="e.g. 12th, 14th and 18th Oct" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:outline-none">
+                                            <label class="block text-[11px] font-semibold text-slate-400 mb-1">Enter Dates *</label>
+                                            <input type="text" id="customDatesText" value="${escapeHTML(d.customDatesText)}" placeholder="e.g. 12th, 14th and 18th Oct" class="w-full px-4 py-3 rounded-xl border text-sm">
                                         </div>
                                     `}
                                 </div>
                             </div>
 
                             <div>
-                                <label class="block text-sm font-semibold text-slate-700 mb-2">Reason for Absence *</label>
+                                <label class="block text-xs font-semibold text-slate-300 mb-2">Reason for Absence *</label>
                                 <div class="flex flex-wrap gap-2 mb-2">
                                     ${['Personal reasons', 'Health reasons', 'Family reasons', 'Emergency', 'Travel'].map(r => `
-                                        <button type="button" onclick="setReason('${r}')" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-lg transition-all">${r}</button>
+                                        <button type="button" onclick="setReason('${r}')" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold rounded-lg border border-slate-700 transition-all">${r}</button>
                                     `).join('')}
                                 </div>
-                                <textarea id="reasonText" rows="4" placeholder="Describe the reason clearly..." class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:outline-none">${escapeHTML(d.reasonText)}</textarea>
+                                <textarea id="reasonText" rows="4" placeholder="Describe the reason clearly..." class="w-full px-4 py-3 rounded-xl border text-sm">${escapeHTML(d.reasonText)}</textarea>
                             </div>
                         </div>
                     `;
                 case 5:
                     return `
                         <div class="space-y-5">
-                            <label class="block text-sm font-semibold text-slate-700 mb-3">What is your attendance percentage?</label>
+                            <label class="block text-xs font-semibold text-slate-300 mb-3">What is your attendance percentage?</label>
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                <label class="flex items-start gap-3 p-4 border rounded-xl cursor-pointer transition-all ${d.hasAttendance === 'yes' ? 'border-blue-600 bg-blue-50/50 ring-1 ring-blue-600' : 'border-slate-200'}">
-                                    <input type="radio" name="hasAttendance" value="yes" ${d.hasAttendance === 'yes' ? 'checked' : ''} onchange="setAttendanceMode('yes')" class="mt-1 text-blue-600">
+                                <label class="flex items-start gap-3 p-4 rounded-xl cursor-pointer transition-all border ${d.hasAttendance === 'yes' ? 'border-blue-500 bg-blue-500/10' : 'border-slate-800 bg-slate-900/40'}">
+                                    <input type="radio" name="hasAttendance" value="yes" ${d.hasAttendance === 'yes' ? 'checked' : ''} onchange="setAttendanceMode('yes')" class="mt-1 text-blue-500">
                                     <div>
-                                        <div class="font-semibold text-slate-900">I have my attendance %</div>
-                                        <div class="text-xs text-slate-500">Include percentage in letter</div>
+                                        <div class="font-semibold text-white text-sm">I have my attendance %</div>
+                                        <div class="text-[11px] text-slate-400">Include percentage in letter</div>
                                     </div>
                                 </label>
-                                <label class="flex items-start gap-3 p-4 border rounded-xl cursor-pointer transition-all ${d.hasAttendance === 'no' ? 'border-blue-600 bg-blue-50/50 ring-1 ring-blue-600' : 'border-slate-200'}">
-                                    <input type="radio" name="hasAttendance" value="no" ${d.hasAttendance === 'no' ? 'checked' : ''} onchange="setAttendanceMode('no')" class="mt-1 text-blue-600">
+                                <label class="flex items-start gap-3 p-4 rounded-xl cursor-pointer transition-all border ${d.hasAttendance === 'no' ? 'border-blue-500 bg-blue-500/10' : 'border-slate-800 bg-slate-900/40'}">
+                                    <input type="radio" name="hasAttendance" value="no" ${d.hasAttendance === 'no' ? 'checked' : ''} onchange="setAttendanceMode('no')" class="mt-1 text-blue-500">
                                     <div>
-                                        <div class="font-semibold text-slate-900">No percentage available</div>
-                                        <div class="text-xs text-slate-500">Completely omit attendance sentence</div>
+                                        <div class="font-semibold text-white text-sm">No percentage available</div>
+                                        <div class="text-[11px] text-slate-400">Completely omit attendance sentence</div>
                                     </div>
                                 </label>
                             </div>
 
                             <div id="attendanceInputContainer" class="${d.hasAttendance === 'yes' ? 'pt-2' : 'hidden pt-2'}">
-                                <label class="block text-sm font-semibold text-slate-700 mb-2">Attendance Percentage (%) *</label>
-                                <input type="number" step="0.1" min="0" max="100" id="attendancePercentage" value="${d.attendancePercentage}" placeholder="e.g. 82.5" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:outline-none">
-                                <p class="text-xs text-slate-500 mt-1">Must be between 0 and 100.</p>
+                                <label class="block text-xs font-semibold text-slate-300 mb-2">Attendance Percentage (%) *</label>
+                                <input type="number" step="0.1" min="0" max="100" id="attendancePercentage" value="${d.attendancePercentage}" placeholder="e.g. 82.5" class="w-full px-4 py-3 rounded-xl border text-sm">
+                                <p class="text-[11px] text-slate-400 mt-1">Must be between 0 and 100.</p>
                             </div>
                         </div>
                     `;
                 case 6:
                     return `
                         <div class="space-y-4">
-                            <p class="text-xs text-slate-500 mb-2">All fields below are optional. If left empty, they will be omitted entirely from the generated letter.</p>
+                            <p class="text-xs text-slate-400 mb-2">All fields below are optional. If left empty, they will be omitted entirely from the generated letter.</p>
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div>
-                                    <label class="block text-sm font-semibold text-slate-700 mb-2">Mentor Name</label>
-                                    <input type="text" id="mentorName" value="${escapeHTML(d.mentorName)}" placeholder="e.g. Prof. Anand" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:outline-none">
+                                    <label class="block text-xs font-semibold text-slate-300 mb-2">Mentor Name</label>
+                                    <input type="text" id="mentorName" value="${escapeHTML(d.mentorName)}" placeholder="e.g. Prof. Anand" class="w-full px-4 py-3 rounded-xl border text-sm">
                                 </div>
                                 <div>
-                                    <label class="block text-sm font-semibold text-slate-700 mb-2">Department</label>
-                                    <input type="text" id="department" value="${escapeHTML(d.department)}" placeholder="e.g. CSE (AI & ML)" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:outline-none">
+                                    <label class="block text-xs font-semibold text-slate-300 mb-2">Department</label>
+                                    <input type="text" id="department" value="${escapeHTML(d.department)}" placeholder="e.g. CSE (AI & ML)" class="w-full px-4 py-3 rounded-xl border text-sm">
                                 </div>
                             </div>
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div>
-                                    <label class="block text-sm font-semibold text-slate-700 mb-2">Semester</label>
-                                    <input type="text" id="semester" value="${escapeHTML(d.semester)}" placeholder="e.g. 5th Semester" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:outline-none">
+                                    <label class="block text-xs font-semibold text-slate-300 mb-2">Semester</label>
+                                    <input type="text" id="semester" value="${escapeHTML(d.semester)}" placeholder="e.g. 5th Semester" class="w-full px-4 py-3 rounded-xl border text-sm">
                                 </div>
                                 <div>
-                                    <label class="block text-sm font-semibold text-slate-700 mb-2">Academic Year</label>
-                                    <input type="text" id="academicYear" value="${escapeHTML(d.academicYear)}" placeholder="e.g. 2026-2027" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:outline-none">
+                                    <label class="block text-xs font-semibold text-slate-300 mb-2">Academic Year</label>
+                                    <input type="text" id="academicYear" value="${escapeHTML(d.academicYear)}" placeholder="e.g. 2026-2027" class="w-full px-4 py-3 rounded-xl border text-sm">
                                 </div>
                             </div>
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div>
-                                    <label class="block text-sm font-semibold text-slate-700 mb-2">Contact Number</label>
-                                    <input type="text" id="contactNumber" value="${escapeHTML(d.contactNumber)}" placeholder="e.g. +91 9876543210" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:outline-none">
+                                    <label class="block text-xs font-semibold text-slate-300 mb-2">Contact Number</label>
+                                    <input type="text" id="contactNumber" value="${escapeHTML(d.contactNumber)}" placeholder="e.g. +91 9876543210" class="w-full px-4 py-3 rounded-xl border text-sm">
                                 </div>
                                 <div>
-                                    <label class="block text-sm font-semibold text-slate-700 mb-2">Email Address</label>
-                                    <input type="email" id="email" value="${escapeHTML(d.email)}" placeholder="e.g. student@college.edu" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:outline-none">
+                                    <label class="block text-xs font-semibold text-slate-300 mb-2">Email Address</label>
+                                    <input type="email" id="email" value="${escapeHTML(d.email)}" placeholder="e.g. student@college.edu" class="w-full px-4 py-3 rounded-xl border text-sm">
                                 </div>
                             </div>
                         </div>
@@ -671,50 +698,46 @@
             return `
                 <div class="flex-grow flex flex-col max-w-2xl w-full mx-auto px-4 py-8 fade-in">
                     <div class="flex items-center justify-between mb-6">
-                        <button onclick="goToFormStep(6)" class="text-sm font-semibold text-slate-500 hover:text-slate-800">
+                        <button onclick="goToFormStep(6)" class="text-xs font-semibold text-slate-400 hover:text-white">
                             ← Back to Form
                         </button>
-                        <h2 class="text-2xl font-bold text-slate-900">Review Information</h2>
+                        <h2 class="text-2xl font-bold text-white">Review Information</h2>
                         <div></div>
                     </div>
 
                     <div class="space-y-4 mb-8">
-                        <!-- Recipient Card -->
-                        <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm relative">
-                            <button onclick="goToFormStep(1)" class="absolute top-4 right-4 text-xs font-bold text-blue-600 hover:underline">Edit</button>
-                            <h3 class="text-sm font-bold uppercase tracking-wider text-slate-400 mb-3">Recipient</h3>
-                            <div class="text-slate-900 font-semibold text-base">${escapeHTML(d.recipientName)}</div>
-                            <div class="text-slate-600 text-sm">${escapeHTML(designation)}</div>
-                            <div class="text-slate-500 text-xs mt-2 whitespace-pre-line">${d.collegeType === 'cmr' ? 'CMR College (CMRCET, Kandlakoya)' : escapeHTML(d.institutionName + ', ' + d.city)}</div>
+                        <div class="glass-card rounded-2xl p-6 relative">
+                            <button onclick="goToFormStep(1)" class="absolute top-4 right-4 text-xs font-bold text-blue-400 hover:underline">Edit</button>
+                            <h3 class="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-3">Recipient</h3>
+                            <div class="text-white font-semibold text-sm">${d.recipientName.trim() ? escapeHTML(d.recipientName) : '<span class="text-slate-500 italic font-normal">No recipient name provided (omitted)</span>'}</div>
+                            <div class="text-slate-300 text-xs">${escapeHTML(designation)}</div>
+                            <div class="text-slate-400 text-xs mt-2 whitespace-pre-line">${d.collegeType === 'cmr' ? 'CMR College (CMRCET, Kandlakoya)' : escapeHTML(d.institutionName + ', ' + d.city)}</div>
                         </div>
 
-                        <!-- Student Card -->
-                        <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm relative">
-                            <button onclick="goToFormStep(3)" class="absolute top-4 right-4 text-xs font-bold text-blue-600 hover:underline">Edit</button>
-                            <h3 class="text-sm font-bold uppercase tracking-wider text-slate-400 mb-3">Student</h3>
-                            <div class="text-slate-900 font-semibold text-base">${escapeHTML(d.studentName)} (${escapeHTML(d.rollNumber)})</div>
-                            <div class="text-slate-600 text-sm">${escapeHTML(d.courseBranch)} • ${escapeHTML(d.year)} Year ${d.section ? '• Sec ' + escapeHTML(d.section) : ''}</div>
+                        <div class="glass-card rounded-2xl p-6 relative">
+                            <button onclick="goToFormStep(3)" class="absolute top-4 right-4 text-xs font-bold text-blue-400 hover:underline">Edit</button>
+                            <h3 class="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-3">Student</h3>
+                            <div class="text-white font-semibold text-sm">${escapeHTML(d.studentName)} (${escapeHTML(d.rollNumber)})</div>
+                            <div class="text-slate-300 text-xs">${escapeHTML(d.courseBranch)} • ${escapeHTML(d.year)} Year ${d.section ? '• Sec ' + escapeHTML(d.section) : ''}</div>
                         </div>
 
-                        <!-- Absence Card -->
-                        <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm relative">
-                            <button onclick="goToFormStep(4)" class="absolute top-4 right-4 text-xs font-bold text-blue-600 hover:underline">Edit</button>
-                            <h3 class="text-sm font-bold uppercase tracking-wider text-slate-400 mb-3">Absence & Reason</h3>
-                            <div class="text-slate-900 font-semibold text-sm">Duration: ${d.numberOfDays} Day(s)</div>
-                            <div class="text-slate-600 text-sm mt-1">Reason: ${escapeHTML(d.reasonText)}</div>
+                        <div class="glass-card rounded-2xl p-6 relative">
+                            <button onclick="goToFormStep(4)" class="absolute top-4 right-4 text-xs font-bold text-blue-400 hover:underline">Edit</button>
+                            <h3 class="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-3">Absence & Reason</h3>
+                            <div class="text-white font-semibold text-xs">Duration: ${d.numberOfDays} Day(s)</div>
+                            <div class="text-slate-300 text-xs mt-1">Reason: ${escapeHTML(d.reasonText)}</div>
                         </div>
 
-                        <!-- Attendance Card -->
-                        <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm relative">
-                            <button onclick="goToFormStep(5)" class="absolute top-4 right-4 text-xs font-bold text-blue-600 hover:underline">Edit</button>
-                            <h3 class="text-sm font-bold uppercase tracking-wider text-slate-400 mb-3">Attendance</h3>
-                            <div class="text-slate-900 font-semibold text-sm">
+                        <div class="glass-card rounded-2xl p-6 relative">
+                            <button onclick="goToFormStep(5)" class="absolute top-4 right-4 text-xs font-bold text-blue-400 hover:underline">Edit</button>
+                            <h3 class="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-3">Attendance</h3>
+                            <div class="text-white font-semibold text-xs">
                                 ${d.hasAttendance === 'yes' ? `Attendance Percentage: ${d.attendancePercentage}%` : 'Attendance: Not available'}
                             </div>
                         </div>
                     </div>
 
-                    <button onclick="generateFinalLetter()" class="w-full py-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl shadow-lg shadow-blue-600/20 text-center transition-all text-base">
+                    <button onclick="generateFinalLetter()" class="w-full py-4 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-2xl shadow-lg shadow-blue-600/30 text-center transition-all text-sm">
                         Generate Final Letter
                     </button>
                 </div>
@@ -726,45 +749,41 @@
 
             return `
                 <div class="flex-grow flex flex-col max-w-3xl w-full mx-auto px-4 py-8 fade-in">
-                    <!-- Action Toolbar -->
-                    <div class="flex flex-wrap items-center justify-between gap-3 mb-6 bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
+                    <div class="flex flex-wrap items-center justify-between gap-3 mb-6 glass-card p-4 rounded-2xl">
                         <div class="flex items-center gap-2">
-                            <button onclick="appState.currentScreen = 'review'; render();" class="px-4 py-2 border border-slate-200 hover:bg-slate-50 text-slate-700 text-xs font-semibold rounded-xl">
+                            <button onclick="appState.currentScreen = 'review'; render();" class="px-4 py-2 glass-card hover:bg-slate-800 text-slate-300 text-xs font-semibold rounded-xl">
                                 ← Review
                             </button>
-                            <button onclick="editDetails()" class="px-4 py-2 border border-slate-200 hover:bg-slate-50 text-slate-700 text-xs font-semibold rounded-xl">
+                            <button onclick="editDetails()" class="px-4 py-2 glass-card hover:bg-slate-800 text-slate-300 text-xs font-semibold rounded-xl">
                                 Edit Details
                             </button>
                         </div>
                         <div class="flex flex-wrap items-center gap-2">
-                            <button onclick="copyLetter()" id="copyBtn" class="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold rounded-xl shadow-sm transition-all">
+                            <button onclick="copyLetter()" id="copyBtn" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white text-xs font-semibold rounded-xl border border-slate-700 transition-all">
                                 Copy Letter
                             </button>
-                            <button onclick="downloadPDF()" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-xl shadow-sm transition-all">
+                            <button onclick="downloadPDF()" class="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold rounded-xl shadow-lg shadow-blue-600/20 transition-all">
                                 Download PDF
                             </button>
-                            <button onclick="shareLetter()" class="px-4 py-2 border border-slate-200 hover:bg-slate-50 text-slate-700 text-xs font-semibold rounded-xl">
+                            <button onclick="shareLetter()" class="px-4 py-2 glass-card hover:bg-slate-800 text-slate-300 text-xs font-semibold rounded-xl">
                                 Share
                             </button>
                         </div>
                     </div>
 
-                    <!-- Notification Toast -->
-                    <div id="toast" class="hidden mb-4 p-3 bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-semibold rounded-xl text-center"></div>
+                    <div id="toast" class="hidden mb-4 p-3 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-semibold rounded-xl text-center"></div>
 
-                    <!-- Realistic A4 Document Preview -->
                     <div class="flex justify-center overflow-x-auto pb-8">
-                        <div id="pdfContent" class="bg-white w-[210mm] min-h-[297mm] p-[20mm] shadow-xl border border-slate-200 rounded-sm text-slate-900 font-sans text-sm leading-relaxed whitespace-pre-wrap select-text">
+                        <div id="pdfContent" class="bg-white text-slate-900 w-[210mm] min-h-[297mm] p-[20mm] shadow-2xl rounded-sm font-sans text-sm leading-relaxed whitespace-pre-wrap select-text">
                             ${escapeHTML(letterText)}
                         </div>
                     </div>
 
-                    <!-- Bottom Flow Actions -->
-                    <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-slate-200">
-                        <button onclick="generateFinalLetter()" class="text-xs font-semibold text-slate-500 hover:text-slate-800">
+                    <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-slate-800">
+                        <button onclick="generateFinalLetter()" class="text-xs font-semibold text-slate-400 hover:text-white">
                             ↻ Generate Again
                         </button>
-                        <button onclick="confirmStartNew()" class="px-6 py-2.5 bg-red-50 hover:bg-red-100 text-red-600 text-xs font-semibold rounded-xl transition-all">
+                        <button onclick="confirmStartNew()" class="px-6 py-2.5 bg-red-500/10 hover:bg-red-500/20 text-red-400 text-xs font-semibold rounded-xl border border-red-500/20 transition-all">
                             Start New Letter
                         </button>
                     </div>
@@ -775,30 +794,28 @@
         function renderAboutScreen() {
             return `
                 <div class="flex-grow flex flex-col max-w-xl w-full mx-auto px-4 py-12 fade-in">
-                    <button onclick="navigateHome()" class="self-start text-sm font-semibold text-slate-500 hover:text-slate-800 mb-6">
+                    <button onclick="navigateHome()" class="self-start text-xs font-semibold text-slate-400 hover:text-white mb-6">
                         ← Back to Home
                     </button>
-                    <div class="bg-white border border-slate-200 rounded-3xl p-8 shadow-sm text-center">
-                        <div class="w-16 h-16 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center text-2xl font-bold mx-auto mb-4 border border-blue-100">
+                    <div class="glass-card rounded-3xl p-8 text-center">
+                        <div class="w-16 h-16 bg-blue-500/10 text-blue-400 rounded-2xl flex items-center justify-center text-2xl font-bold mx-auto mb-4 border border-blue-500/20">
                             ZP
                         </div>
-                        <h1 class="text-2xl font-bold text-slate-900 mb-1">Zuta Paper</h1>
-                        <p class="text-blue-600 font-medium text-sm mb-4">Professional Letter Generator</p>
-                        <div class="text-xs uppercase tracking-widest text-slate-400 font-semibold mb-6">
+                        <h1 class="text-2xl font-bold text-white mb-1">Zuta Paper</h1>
+                        <p class="text-blue-400 font-medium text-xs mb-4">Professional Letter Generator</p>
+                        <div class="text-[10px] uppercase tracking-widest text-slate-400 font-semibold mb-6">
                             Made by Zubeir & Thoufiq
                         </div>
-                        <p class="text-slate-600 text-sm leading-relaxed mb-6 text-left">
-                            Zuta Paper helps students create clear and formal college letters quickly using a simple guided form. Built with robust privacy, zero data collection on external servers, and instant A4 PDF export capabilities.
+                        <p class="text-slate-300 text-xs leading-relaxed mb-6 text-left">
+                            Zuta Paper helps students create clear and formal college letters quickly using a guided form with smooth dark-mode aesthetics. Fully responsive and equipped with instant PDF downloads.
                         </p>
-                        <button onclick="navigateHome()" class="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl text-sm transition-all">
+                        <button onclick="navigateHome()" class="w-full py-3 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-xl text-xs transition-all shadow-lg shadow-blue-600/20">
                             Get Started
                         </button>
                     </div>
                 </div>
             `;
         }
-
-        // --- Interaction & Event Handlers ---
 
         function navigateTo(screen) {
             appState.currentScreen = screen;
@@ -872,7 +889,6 @@
 
         function syncFormInputsToState() {
             const d = appState.formData;
-            // Capture inputs from current step DOM
             if (document.getElementById('recipientName')) d.recipientName = document.getElementById('recipientName').value;
             if (document.getElementById('recipientDesignation')) d.recipientDesignation = document.getElementById('recipientDesignation').value;
             if (document.getElementById('customDesignation')) d.customDesignation = document.getElementById('customDesignation').value;
@@ -1024,7 +1040,6 @@
         }
 
         function attachFormListeners() {
-            // Live address update listener for step 2
             const inputs = ['institutionName', 'addressLine1', 'addressLine2', 'city', 'district', 'state', 'pincode'];
             inputs.forEach(id => {
                 const el = document.getElementById(id);
@@ -1041,10 +1056,11 @@
             });
         }
 
-        // --- Initial Boot ---
         render();
     </script>
 </body>
 </html>
 
 ```
+What would you like to customize next?
+
