@@ -1,8 +1,3 @@
-Here is the fully updated code for **Zuta Paper** featuring your new requests:
- * **Default Theme**: Switched to a sleek, modern **dark theme** (#090d16 background with dark slate cards and glowing accents).
- * **Smooth Astra-like Animations**: Upgraded with custom glowing orb backdrops, smooth glassmorphism effects, fluid step transitions, and floating gradient pulses inspired by ChatGPT Astra.
- * **Optional Recipient Name**: The recipient name remains completely optional and is automatically omitted if left blank.
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -34,12 +29,13 @@ Here is the fully updated code for **Zuta Paper** featuring your new requests:
         }
     </script>
     <style>
-        /* Smooth Astra-like Animations & Dark Aesthetics */
+        /* Smooth Dark Theme & Astra Animations */
         body {
             font-family: 'Inter', sans-serif;
             background-color: #090d16;
             color: #f3f4f6;
             overflow-x: hidden;
+            scroll-behavior: smooth;
         }
 
         /* Ambient Glowing Background Orbs */
@@ -56,57 +52,126 @@ Here is the fully updated code for **Zuta Paper** featuring your new requests:
         .astra-orb {
             position: absolute;
             border-radius: 50%;
-            filter: blur(100px);
-            opacity: 0.15;
-            animation: floatOrb 12s ease-in-out infinite alternate;
+            filter: blur(120px);
+            opacity: 0.2;
+            animation: floatOrb 10s ease-in-out infinite alternate;
         }
         .orb-1 {
-            width: 450px;
-            height: 450px;
-            background: #3b82f6;
-            top: -100px;
-            left: -100px;
-        }
-        .orb-2 {
             width: 500px;
             height: 500px;
-            background: #8b5cf6;
-            bottom: -150px;
-            right: -150px;
-            animation-delay: -4s;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            top: -150px;
+            left: -150px;
+        }
+        .orb-2 {
+            width: 600px;
+            height: 600px;
+            background: linear-gradient(135deg, #ec4899, #3b82f6);
+            bottom: -200px;
+            right: -200px;
+            animation-delay: -5s;
         }
 
         @keyframes floatOrb {
             0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(40px, 30px) scale(1.1); }
+            100% { transform: translate(50px, 40px) scale(1.15); }
+        }
+
+        /* Astra Pulsing Core Animation for Splash Screen */
+        .astra-core-container {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .astra-ring {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 2px solid rgba(59, 130, 246, 0.4);
+            animation: astraPulseRing 2.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+        }
+
+        .astra-ring:nth-child(2) {
+            animation-delay: -0.8s;
+            border-color: rgba(139, 92, 246, 0.4);
+        }
+
+        .astra-ring:nth-child(3) {
+            animation-delay: -1.6s;
+            border-color: rgba(236, 72, 153, 0.4);
+        }
+
+        @keyframes astraPulseRing {
+            0% {
+                transform: scale(0.8);
+                opacity: 0.8;
+            }
+            100% {
+                transform: scale(1.8);
+                opacity: 0;
+            }
+        }
+
+        .astra-center-orb {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            border-radius: 50%;
+            box-shadow: 0 0 30px rgba(59, 130, 246, 0.6), inset 0 0 15px rgba(255, 255, 255, 0.4);
+            animation: coreGlow 3s ease-in-out infinite alternate;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 1.25rem;
+        }
+
+        @keyframes coreGlow {
+            0% { transform: scale(0.95); box-shadow: 0 0 20px rgba(59, 130, 246, 0.4); }
+            100% { transform: scale(1.05); box-shadow: 0 0 45px rgba(139, 92, 246, 0.8); }
         }
 
         /* Fluid Fade-in & Scale Animation */
         .fade-in {
-            animation: astraFadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation: astraFadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
         @keyframes astraFadeIn {
-            from { opacity: 0; transform: translateY(12px) scale(0.99); }
+            from { opacity: 0; transform: translateY(16px) scale(0.98); }
             to { opacity: 1; transform: translateY(0) scale(1); }
         }
 
         /* Glassmorphism card styling */
         .glass-card {
-            background: rgba(17, 24, 39, 0.75);
-            backdrop-filter: blur(16px);
+            background: rgba(17, 24, 39, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .glass-card:hover {
+            border-color: rgba(59, 130, 246, 0.25);
+            box-shadow: 0 30px 60px -12px rgba(59, 130, 246, 0.15);
         }
 
         /* Custom inputs for dark mode */
         input, select, textarea {
-            background-color: rgba(31, 41, 55, 0.6) !important;
+            background-color: rgba(31, 41, 55, 0.5) !important;
             border-color: rgba(255, 255, 255, 0.1) !important;
             color: #f3f4f6 !important;
+            transition: all 0.25s ease;
         }
         input:focus, select:focus, textarea:focus {
             border-color: #3b82f6 !important;
-            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.25) !important;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25) !important;
+            background-color: rgba(31, 41, 55, 0.8) !important;
         }
 
         /* Scrollbar */
@@ -131,12 +196,12 @@ Here is the fully updated code for **Zuta Paper** featuring your new requests:
 
     <!-- Footer Credit -->
     <footer class="py-4 text-center text-xs text-slate-500 border-t border-slate-800/60 bg-[#090d16]/80 backdrop-blur-md">
-        Zuta Paper • Professional Letter Generator • Made by Zubeir & Thoufiq
+        Zuta Paper • Professional Letter Generator • Made by Zubair & Thoufiq
     </footer>
 
     <!-- Application Logic & Source Code -->
     <script>
-        const STORAGE_KEY = 'zuta_paper_form_data_v3';
+        const STORAGE_KEY = 'zuta_paper_form_data_v4';
 
         const defaultFormData = {
             recipientName: '',
@@ -265,7 +330,6 @@ Here is the fully updated code for **Zuta Paper** featuring your new requests:
 
             let letter = `${formattedDate}\n\n`;
             
-            // Omitted completely if recipientName is empty
             if (d.recipientName.trim()) {
                 letter += `${d.recipientName.trim()}\n`;
             }
@@ -312,7 +376,7 @@ Here is the fully updated code for **Zuta Paper** featuring your new requests:
                             appState.currentScreen = 'home';
                             render();
                         }
-                    }, 1400);
+                    }, 1800);
                     break;
                 case 'home':
                     app.innerHTML = renderHomeScreen();
@@ -336,13 +400,16 @@ Here is the fully updated code for **Zuta Paper** featuring your new requests:
         function renderSplashScreen() {
             return `
                 <div class="flex-grow flex flex-col items-center justify-center px-4 fade-in">
-                    <div class="w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center text-white text-2xl font-bold shadow-xl shadow-blue-500/30 mb-6 border border-blue-400/30">
-                        ZP
+                    <div class="astra-core-container mb-6">
+                        <div class="astra-ring"></div>
+                        <div class="astra-ring"></div>
+                        <div class="astra-ring"></div>
+                        <div class="astra-center-orb">ZP</div>
                     </div>
-                    <h1 class="text-3xl font-bold tracking-tight text-white mb-2">Zuta Paper</h1>
-                    <p class="text-slate-400 font-medium mb-4 text-sm">Professional Letter Generator</p>
-                    <div class="text-xs uppercase tracking-widest text-blue-400/80 font-semibold">
-                        Made by Zubeir & Thoufiq
+                    <h1 class="text-3xl font-extrabold tracking-tight text-white mb-2">Zuta Paper</h1>
+                    <p class="text-slate-400 font-medium mb-4 text-xs">Professional Letter Generator</p>
+                    <div class="text-[11px] uppercase tracking-widest text-blue-400/90 font-bold">
+                        Made by Zubair & Thoufiq
                     </div>
                 </div>
             `;
@@ -357,13 +424,13 @@ Here is the fully updated code for **Zuta Paper** featuring your new requests:
                     <h1 class="text-4xl font-extrabold tracking-tight text-white mb-3">Zuta Paper</h1>
                     <p class="text-lg font-medium text-blue-400 mb-4">Professional Letter Generator</p>
                     <p class="text-slate-400 mb-8 leading-relaxed text-sm">
-                        Create a formal college leave or absence letter in seconds with smooth, glowing aesthetics and instant PDF exports.
+                        Create a formal college leave or absence letter in seconds with smooth Astra animations and instant PDF exports.
                     </p>
                     <div class="flex flex-col sm:flex-row gap-4 w-full justify-center">
-                        <button onclick="startNewFlow()" class="px-8 py-4 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-2xl shadow-lg shadow-blue-600/30 transition-all duration-200 text-sm">
+                        <button onclick="startNewFlow()" class="px-8 py-4 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-2xl shadow-lg shadow-blue-600/30 transition-all duration-300 text-sm transform hover:-translate-y-0.5">
                             Create New Letter
                         </button>
-                        <button onclick="navigateTo('about')" class="px-8 py-4 glass-card hover:bg-slate-800 text-slate-300 font-semibold rounded-2xl transition-all duration-200 text-sm">
+                        <button onclick="navigateTo('about')" class="px-8 py-4 glass-card hover:bg-slate-800 text-slate-300 font-semibold rounded-2xl transition-all duration-300 text-sm">
                             About Zuta Paper
                         </button>
                     </div>
@@ -401,7 +468,7 @@ Here is the fully updated code for **Zuta Paper** featuring your new requests:
                             </span>
                         </div>
                         <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
-                            <div class="bg-blue-500 h-full transition-all duration-500 shadow-sm shadow-blue-500/50" style="width: ${progress}%"></div>
+                            <div class="bg-blue-500 h-full transition-all duration-700 ease-out shadow-sm shadow-blue-500/50" style="width: ${progress}%"></div>
                         </div>
                     </div>
 
@@ -410,7 +477,7 @@ Here is the fully updated code for **Zuta Paper** featuring your new requests:
                         <p class="text-slate-400 text-xs mt-1">${stepSubtitle}</p>
                     </div>
 
-                    <div id="form-error" class="hidden mb-4 p-4 bg-red-500/10 border border-red-500/30 text-red-400 text-xs rounded-xl font-medium"></div>
+                    <div id="form-error" class="hidden mb-4 p-4 bg-red-500/10 border border-red-500/30 text-red-400 text-xs rounded-xl font-medium fade-in"></div>
 
                     <div class="glass-card rounded-3xl p-6 sm:p-8 mb-6 flex-grow">
                         ${renderStepFields(step, d)}
@@ -441,7 +508,7 @@ Here is the fully updated code for **Zuta Paper** featuring your new requests:
             switch(step) {
                 case 1:
                     return `
-                        <div class="space-y-5">
+                        <div class="space-y-5 fade-in">
                             <div>
                                 <label class="block text-xs font-semibold text-slate-300 mb-1">Recipient Full Name <span class="text-slate-500 font-normal">(Optional)</span></label>
                                 <p class="text-[11px] text-slate-400 mb-2">Leave blank if addressing generally to the designation.</p>
@@ -463,7 +530,7 @@ Here is the fully updated code for **Zuta Paper** featuring your new requests:
                     `;
                 case 2:
                     return `
-                        <div class="space-y-5">
+                        <div class="space-y-5 fade-in">
                             <div>
                                 <label class="block text-xs font-semibold text-slate-300 mb-3">College Preset</label>
                                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -529,7 +596,7 @@ Here is the fully updated code for **Zuta Paper** featuring your new requests:
                     `;
                 case 3:
                     return `
-                        <div class="space-y-5">
+                        <div class="space-y-5 fade-in">
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div>
                                     <label class="block text-xs font-semibold text-slate-300 mb-2">Full Name *</label>
@@ -560,7 +627,7 @@ Here is the fully updated code for **Zuta Paper** featuring your new requests:
                     `;
                 case 4:
                     return `
-                        <div class="space-y-5">
+                        <div class="space-y-5 fade-in">
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div>
                                     <label class="block text-xs font-semibold text-slate-300 mb-2">Letter Date *</label>
@@ -626,7 +693,7 @@ Here is the fully updated code for **Zuta Paper** featuring your new requests:
                     `;
                 case 5:
                     return `
-                        <div class="space-y-5">
+                        <div class="space-y-5 fade-in">
                             <label class="block text-xs font-semibold text-slate-300 mb-3">What is your attendance percentage?</label>
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <label class="flex items-start gap-3 p-4 rounded-xl cursor-pointer transition-all border ${d.hasAttendance === 'yes' ? 'border-blue-500 bg-blue-500/10' : 'border-slate-800 bg-slate-900/40'}">
@@ -654,7 +721,7 @@ Here is the fully updated code for **Zuta Paper** featuring your new requests:
                     `;
                 case 6:
                     return `
-                        <div class="space-y-4">
+                        <div class="space-y-4 fade-in">
                             <p class="text-xs text-slate-400 mb-2">All fields below are optional. If left empty, they will be omitted entirely from the generated letter.</p>
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div>
@@ -771,7 +838,7 @@ Here is the fully updated code for **Zuta Paper** featuring your new requests:
                         </div>
                     </div>
 
-                    <div id="toast" class="hidden mb-4 p-3 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-semibold rounded-xl text-center"></div>
+                    <div id="toast" class="hidden mb-4 p-3 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-semibold rounded-xl text-center fade-in"></div>
 
                     <div class="flex justify-center overflow-x-auto pb-8">
                         <div id="pdfContent" class="bg-white text-slate-900 w-[210mm] min-h-[297mm] p-[20mm] shadow-2xl rounded-sm font-sans text-sm leading-relaxed whitespace-pre-wrap select-text">
@@ -804,10 +871,10 @@ Here is the fully updated code for **Zuta Paper** featuring your new requests:
                         <h1 class="text-2xl font-bold text-white mb-1">Zuta Paper</h1>
                         <p class="text-blue-400 font-medium text-xs mb-4">Professional Letter Generator</p>
                         <div class="text-[10px] uppercase tracking-widest text-slate-400 font-semibold mb-6">
-                            Made by Zubeir & Thoufiq
+                            Made by Zubair & Thoufiq
                         </div>
                         <p class="text-slate-300 text-xs leading-relaxed mb-6 text-left">
-                            Zuta Paper helps students create clear and formal college letters quickly using a guided form with smooth dark-mode aesthetics. Fully responsive and equipped with instant PDF downloads.
+                            Zuta Paper helps students create clear and formal college letters quickly using a guided form with smooth dark-mode Astra aesthetics. Fully responsive and equipped with instant PDF downloads.
                         </p>
                         <button onclick="navigateHome()" class="w-full py-3 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-xl text-xs transition-all shadow-lg shadow-blue-600/20">
                             Get Started
@@ -820,20 +887,20 @@ Here is the fully updated code for **Zuta Paper** featuring your new requests:
         function navigateTo(screen) {
             appState.currentScreen = screen;
             render();
-            window.scrollTo(0, 0);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         function startNewFlow() {
             appState.currentScreen = 'form';
             appState.currentStep = 1;
             render();
-            window.scrollTo(0, 0);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         function navigateHome() {
             appState.currentScreen = 'home';
             render();
-            window.scrollTo(0, 0);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         function navigateHomeWithConfirm() {
@@ -846,7 +913,7 @@ Here is the fully updated code for **Zuta Paper** featuring your new requests:
             appState.currentScreen = 'form';
             appState.currentStep = step;
             render();
-            window.scrollTo(0, 0);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         function setCollegeType(type) {
@@ -939,7 +1006,7 @@ Here is the fully updated code for **Zuta Paper** featuring your new requests:
             if (appState.currentStep < 6) {
                 appState.currentStep++;
                 render();
-                window.scrollTo(0, 0);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
             }
         }
 
@@ -948,7 +1015,7 @@ Here is the fully updated code for **Zuta Paper** featuring your new requests:
             if (appState.currentStep > 1) {
                 appState.currentStep--;
                 render();
-                window.scrollTo(0, 0);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
             }
         }
 
@@ -963,20 +1030,20 @@ Here is the fully updated code for **Zuta Paper** featuring your new requests:
             }
             appState.currentScreen = 'review';
             render();
-            window.scrollTo(0, 0);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         function generateFinalLetter() {
             appState.currentScreen = 'preview';
             render();
-            window.scrollTo(0, 0);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         function editDetails() {
             appState.currentScreen = 'form';
             appState.currentStep = 1;
             render();
-            window.scrollTo(0, 0);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         function confirmStartNew() {
@@ -984,7 +1051,7 @@ Here is the fully updated code for **Zuta Paper** featuring your new requests:
                 clearSavedData();
                 appState.currentScreen = 'home';
                 render();
-                window.scrollTo(0, 0);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
             }
         }
 
@@ -1061,6 +1128,4 @@ Here is the fully updated code for **Zuta Paper** featuring your new requests:
 </body>
 </html>
 
-```
-What would you like to customize next?
 
